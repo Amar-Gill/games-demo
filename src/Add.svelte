@@ -1,18 +1,18 @@
 <div class="outer">
 
-    <input type="button" value="Play again?" id="replay-btn"/>
+    <input type="button" value="Play again?" id="replay-btn" on:click|preventDefault={replayGame} />
 
     <h2>{prompt}</h2>
 
     <GridBox cards={a} />
     <div>
-        <img src="/images/plus-sign.png" alt="plus-sign"/>
+        <img src="/images/plus-sign.png" alt="plus-sign" />
     </div>
     <GridBox cards={b} />
 
     <section>
         {#each options as option}
-            <input type="button" value={option} on:click|preventDefault={validateAnswer}>
+            <input class="answer-btn" type="button" value={option} on:click|preventDefault={validateAnswer}>
         {/each}
     </section>
     
@@ -62,7 +62,23 @@
     import { onMount } from 'svelte';
     import GridBox from './GridBox.svelte';
 
-    const replayBtn = document.getElementById('#replay-btn');
+    let prompt = "Add up the bananas!"
+
+    // initialize a and b as random ints between 1 and 10
+    let a = Math.floor(Math.random() * 11);
+    let b = Math.floor(Math.random() * 11);
+
+    // calculate alternate options in same manner as a and b
+    let alt1 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
+    let alt2 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
+
+    // calculate answer
+    $: answer = a + b;
+
+    // form array for answer and alternate options
+    $: options = [answer, alt1, alt2];
+
+    $: console.log(`${a} + ${b} = ${answer}`);
 
     // function to shuffle an array
     // https://javascript.info/task/shuffle
@@ -83,31 +99,25 @@
     function validateAnswer(e) {
         if (e.target.value == answer) {
             prompt = `${e.target.value} is correct!`;
-            replayBtn.setAttribute('display', 'block');
+
+            // change replay btn display to block to reveal it to user
+            const replayBtn = document.getElementById('replay-btn');
+            replayBtn.style.display = 'block';
+
+            // disable answer buttons
+            const answerBtnsCollection = document.getElementsByClassName('answer-btn');
+            const answerBtns = [...answerBtnsCollection];
+            answerBtns.forEach(btn => {
+                console.log(btn);
+                btn.setAttribute('disabled', true);
+            });
         } else {
             prompt = `${e.target.value} is incorrect - how many bananas are there?`;
         }
     }
 
-    let prompt = "Add up the bananas!"
-
-    // initialize a and b as random ints between 1 and 10
-    let a = Math.floor(Math.random() * 11);
-    let b = Math.floor(Math.random() * 11);
-
-    // calculate alternate options in same manner as a and b
-    let alt1 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
-    let alt2 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
-
-    // calculate answer
-    $: answer = a + b;
-
-    // form array for answer and alternate options
-    $: options = [answer, alt1, alt2];
-
-    $: console.log(`${a} + ${b} = ${answer}`);
-
-    onMount(() => {
+    // function to validate game data
+    function validateGame() {
         // set a and b to 1 if they are 0
         if (a == 0) a = 1;
         if (b == 0) b = 1;
@@ -129,7 +139,38 @@
 
         // shuffle the options array
         shuffle(options);
+    }
 
+    function replayGame() {
+        // reset prompt
+        prompt = 'Add up the bananas!';
+
+        // change replay btn display to none
+        const replayBtn = document.getElementById('replay-btn');
+        replayBtn.style.display = 'none';
+
+        // re-enable answer buttons
+        const answerBtnsCollection = document.getElementsByClassName('answer-btn');
+        const answerBtns = [...answerBtnsCollection];
+        answerBtns.forEach(btn => {
+            console.log(btn);
+            btn.removeAttribute('disabled');
+        });
+
+        // recalculate a b alt1 and alt2
+        // initialize a and b as random ints between 1 and 10
+        a = Math.floor(Math.random() * 11);
+        b = Math.floor(Math.random() * 11);
+
+        // calculate alternate options in same manner as a and b
+        alt1 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
+        alt2 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
+
+        validateGame();
+    }
+
+    onMount(() => {
+        validateGame();
     })
 
 </script>
