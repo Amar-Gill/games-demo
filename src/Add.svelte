@@ -133,25 +133,22 @@
     // function to validate game data
     async function validateGame() {
         console.log('validating game')
-        // set a and b to 1 if they are 0
-        if (a == 0) a = 1;
-        if (b == 0) b = 1;
+        // recalculate a and b if they are 0
+        while (a == 0) a = Math.floor(Math.random() * 11);
 
-        // check they are not 0
-        if (alt1 == 0) alt1 = 1;
-        if (alt2 == 0) alt2 = 1;
+        while (b == 0) b = Math.floor(Math.random() * 11);
 
         await tick();
 
-        // check that alternate options do not equal answer
-        while (alt1 == answer || alt1 == alt2) {
+        // check that alternate options do not equal answer or each other or 0
+        while (alt1 == answer || alt1 == alt2 || alt1 == 0) {
             console.log(`alt1: ${alt1} alt2: ${alt2} answer: ${answer} - updating alt1`)
             alt1 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
         }
 
         await tick();
 
-        while (alt2 == answer || alt2 == alt1) {
+        while (alt2 == answer || alt2 == alt1 || alt2 == 0) {
             console.log(`alt2: ${alt2} alt1: ${alt1} answer: ${answer} - updating alt2`)
             alt2 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
         }
