@@ -74,7 +74,7 @@
 </style>
 
 <script>
-    import { onMount } from 'svelte';
+    import { beforeUpdate } from 'svelte';
     import GridBox from './GridBox.svelte';
 
     let prompt = "Add up the bananas!"
@@ -182,7 +182,7 @@
         validateGame();
     }
 
-    onMount(() => {
+    beforeUpdate(() => {
         validateGame();
     })
 
