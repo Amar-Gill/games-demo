@@ -74,7 +74,7 @@
 </style>
 
 <script>
-    import { beforeUpdate } from 'svelte';
+    import { onMount, tick, beforeUpdate } from 'svelte';
     import GridBox from './GridBox.svelte';
 
     let prompt = "Add up the bananas!"
@@ -131,7 +131,8 @@
     }
 
     // function to validate game data
-    function validateGame() {
+    async function validateGame() {
+        console.log('validating game')
         // set a and b to 1 if they are 0
         if (a == 0) a = 1;
         if (b == 0) b = 1;
@@ -140,19 +141,23 @@
         if (alt1 == 0) alt1 = 1;
         if (alt2 == 0) alt2 = 1;
 
+        await tick();
+
         // check that alternate options do not equal answer
         while (alt1 == answer || alt1 == alt2) {
+            console.log(`alt1: ${alt1} alt2: ${alt2} answer: ${answer} - updating alt1`)
             alt1 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
-            console.log("alt1 equalled answer so changing")
         }
+
+        await tick();
 
         while (alt2 == answer || alt2 == alt1) {
+            console.log(`alt2: ${alt2} alt1: ${alt1} answer: ${answer} - updating alt2`)
             alt2 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
-            console.log("alt2 equalled answer so changing")
         }
 
-        // shuffle the options array
-        shuffle(options);
+        await tick();
+
     }
 
     function replayGame() {
@@ -183,6 +188,10 @@
     }
 
     beforeUpdate(() => {
+        shuffle(options);
+    });
+
+    onMount(() => {
         validateGame();
     })
 
