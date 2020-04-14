@@ -1,13 +1,12 @@
 <script>
 	import Nav from './Nav.svelte';
+	import Add from './Add.svelte';
 </script>
 
-<Nav></Nav>
+<Nav/>
 
 <main>
-	<h1>hey hey</h1>
-	<h1>hey hey</h1>
-	<h1>hey hey</h1>
+	<Add/>
 </main>
 
 <style>
