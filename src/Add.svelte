@@ -1,10 +1,13 @@
-<div class='top-div'>
-    <div>
-        <h1>Add two numbers: {a} + {b}</h1>
-        <p>What's the correct answer?</p>
-    </div>
+<div class="outer">
+
+    <input type="button" value="Play again?" id="replay-btn"/>
+
+    <h2>{prompt}</h2>
 
     <GridBox cards={a} />
+    <div>
+        <img src="/images/plus-sign.png" alt="plus-sign"/>
+    </div>
     <GridBox cards={b} />
 
     <section>
@@ -16,19 +19,40 @@
 </div>
 
 <style>
-    .top-div {
+    .outer {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         height: 100%;
+        background-color: lightslategrey;
+        border-radius: 6px;
     }
 
-    .top-div div {
-        border: solid black 2px;
+    #replay-btn {
+        position: fixed;
+        right: 1rem;
+        display: none;
+    }
+
+    h2 {
+        /* border: solid black 2px; */
+        text-align: center;
+        color:lightgoldenrodyellow;
+        margin-bottom: 0rem;
+    }
+
+    div {
+        display: flex;
+        justify-content: center;
+    }
+
+    img {
+        height: 40px;
+        width: 40px;
     }
 
     section {
-        border: solid black 2px;
+        /* border: solid black 2px; */
         display: flex;
         justify-content: space-evenly;
     }
@@ -37,6 +61,8 @@
 <script>
     import { onMount } from 'svelte';
     import GridBox from './GridBox.svelte';
+
+    const replayBtn = document.getElementById('#replay-btn');
 
     // function to shuffle an array
     // https://javascript.info/task/shuffle
@@ -56,11 +82,14 @@
     // validate answer function
     function validateAnswer(e) {
         if (e.target.value == answer) {
-            alert('CORRECT');
+            prompt = `${e.target.value} is correct!`;
+            replayBtn.setAttribute('display', 'block');
         } else {
-            alert("INCORRECT");
+            prompt = `${e.target.value} is incorrect - how many bananas are there?`;
         }
     }
+
+    let prompt = "Add up the bananas!"
 
     // initialize a and b as random ints between 1 and 10
     let a = Math.floor(Math.random() * 11);

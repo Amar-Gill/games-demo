@@ -13,8 +13,8 @@
 	main {
     margin-left: 5rem;
 	padding: 1rem;
-	border: solid pink 4px;
-	/* display: flex;
+	/* border: solid pink 4px;
+	display: flex;
 	flex-direction: column;
 	justify-content: space-around; */
 	top: 0;

@@ -5,16 +5,16 @@
 <nav>
     <ul>
         <li>
-            What's up
+            placeholder
         </li>
         <li>
-            What's up
+            placeholder
         </li>
         <li>
-            What's up
+            placeholder
         </li>
         <li>
-            What's up
+            placeholder
         </li>
 
     </ul>
@@ -25,7 +25,7 @@
     /* TODO - refactor for media queries */
     nav {
         position: fixed;
-        background-color: lightseagreen;
+        background-color:darkslategrey;
         top: 0;
         width: 5rem;
         height: 100vh;
@@ -43,6 +43,7 @@
 
     li {
         width: 100%;
+        color: lightgoldenrodyellow;
     }
 
     li:last-child {
