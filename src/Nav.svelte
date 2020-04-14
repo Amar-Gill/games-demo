@@ -5,16 +5,16 @@
 <nav>
     <ul>
         <li>
-            placeholder
+            nav-item
         </li>
         <li>
-            placeholder
+            nav-item
         </li>
         <li>
-            placeholder
+            nav-item
         </li>
         <li>
-            placeholder
+            nav-item
         </li>
 
     </ul>

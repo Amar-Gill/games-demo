@@ -2,7 +2,7 @@
 
     <input type="button" value="Play again?" id="replay-btn" on:click|preventDefault={replayGame} />
 
-    <h2>{prompt}</h2>
+    <h1>{prompt}</h1>
 
     <GridBox cards={a} />
     <div>
@@ -32,9 +32,23 @@
         position: fixed;
         right: 1rem;
         display: none;
+        font-size: 1.5rem;
+        font-family: 'Comic Sans MS';
+        border-radius: 8px;
+        color: lightgoldenrodyellow;
+        background-color: darkslategray;
     }
 
-    h2 {
+    .answer-btn {
+        width: 6rem;
+        font-size: 1.5rem;
+        font-family: 'Comic Sans MS';
+        border-radius: 8px;
+        color: lightgoldenrodyellow;
+        background-color: darkslategray;
+    }
+
+    h1 {
         /* border: solid black 2px; */
         text-align: center;
         color:lightgoldenrodyellow;
@@ -55,6 +69,7 @@
         /* border: solid black 2px; */
         display: flex;
         justify-content: space-evenly;
+        margin-bottom: 1rem;
     }
 </style>
 
@@ -108,7 +123,6 @@
             const answerBtnsCollection = document.getElementsByClassName('answer-btn');
             const answerBtns = [...answerBtnsCollection];
             answerBtns.forEach(btn => {
-                console.log(btn);
                 btn.setAttribute('disabled', true);
             });
         } else {
@@ -153,7 +167,6 @@
         const answerBtnsCollection = document.getElementsByClassName('answer-btn');
         const answerBtns = [...answerBtnsCollection];
         answerBtns.forEach(btn => {
-            console.log(btn);
             btn.removeAttribute('disabled');
         });
 
