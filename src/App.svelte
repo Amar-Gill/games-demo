@@ -1,30 +1,27 @@
 <script>
-	export let name;
+	import Nav from './Nav.svelte';
 </script>
 
+<Nav></Nav>
+
 <main>
-	<h1>Hello {name}!</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<h1>hey hey</h1>
+	<h1>hey hey</h1>
+	<h1>hey hey</h1>
 </main>
 
 <style>
 	main {
-		text-align: center;
-		padding: 1em;
-		max-width: 240px;
-		margin: 0 auto;
+    margin-left: 5rem;
+	padding: 1rem;
+	border: solid pink 4px;
+	/* display: flex;
+	flex-direction: column;
+	justify-content: space-around; */
+	top: 0;
+	height: 100vh;
+	width: calc(100vw - 5rem);
+	position: fixed;
 	}
 
-	h1 {
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
 </style>
