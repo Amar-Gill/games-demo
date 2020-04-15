@@ -1,25 +1,31 @@
 <div class="outer">
 
+    <!-- position: fixed  -->
     <input type="button" value="Play again?" id="replay-btn" on:click|preventDefault={replayGame} />
 
+    <h5>{t}</h5>
+
+    <!-- <aside></aside> -->
+
+    <!-- position != fixed  -->
     <h1>{prompt}</h1>
 
     <GridBox cards={a} />
-    <div>
+    <section>
         <img src="/images/plus-sign.png" alt="plus-sign" />
-    </div>
+    </section>
     <GridBox cards={b} />
 
-    <section>
+    <footer>
         {#each options as option}
             <input class="answer-btn" type="button" value={option} on:click|preventDefault={validateAnswer}>
         {/each}
-    </section>
+    </footer>
     
 </div>
 
 <style>
-    .outer {
+    div {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -48,14 +54,20 @@
         background-color: darkslategray;
     }
 
-    h1 {
+    h1, h5 {
         /* border: solid black 2px; */
         text-align: center;
         color:lightgoldenrodyellow;
         margin-bottom: 0rem;
     }
 
-    div {
+    h5 {
+        position: fixed;
+        font-weight: bold;
+        left: 7rem;
+    }
+
+    section {
         display: flex;
         justify-content: center;
     }
@@ -65,7 +77,7 @@
         width: 40px;
     }
 
-    section {
+    footer {
         /* border: solid black 2px; */
         display: flex;
         justify-content: space-evenly;
@@ -77,11 +89,16 @@
     import { onMount, tick, beforeUpdate } from 'svelte';
     import GridBox from './GridBox.svelte';
 
+    // initialize game prompt and clock for user
     let prompt = "Add up the bananas!"
 
     // initialize a and b as random ints between 1 and 10
     let a = Math.floor(Math.random() * 11);
     let b = Math.floor(Math.random() * 11);
+
+    // initialize game timer
+    let t = 0;
+    let interval = setInterval(() => { t += 1 }, 1000);
 
     // calculate alternate options in same manner as a and b
     let alt1 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
@@ -114,6 +131,10 @@
     function validateAnswer(e) {
         if (e.target.value == answer) {
             prompt = `${e.target.value} is correct!`;
+
+            console.log(t);
+
+            clearInterval(interval);
 
             // change replay btn display to block to reveal it to user
             const replayBtn = document.getElementById('replay-btn');
@@ -157,6 +178,7 @@
 
     }
 
+    // TODO - refactor function as initialize game by first removing top level code
     function replayGame() {
         // reset prompt
         prompt = 'Add up the bananas!';
@@ -180,6 +202,10 @@
         // calculate alternate options in same manner as a and b
         alt1 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
         alt2 = Math.floor(Math.random() * 11) + Math.floor(Math.random() * 11);
+
+        // re-initialize game timer
+        t = 0;
+        interval = setInterval(() => { t += 1 }, 1000);
 
         validateGame();
     }
