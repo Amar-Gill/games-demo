@@ -1,13 +1,15 @@
-<div class="outer">
+ <!-- position: fixed  -->
+ <input type="button" value="Play again?" id="replay-btn" on:click|preventDefault={replayGame} />
 
-    <!-- position: fixed  -->
-    <input type="button" value="Play again?" id="replay-btn" on:click|preventDefault={replayGame} />
+ <h5><time>{t}</time></h5>
 
-    <h5>{t}</h5>
+ <aside id='pop-up'>
+     <h6>~ NICE WORK ~</h6>
+     <img src='/images/pbjt.gif' alt='gif' />
+ </aside>
+ <!-- position != fixed  -->
 
-    <!-- <aside></aside> -->
-
-    <!-- position != fixed  -->
+<div>
     <h1>{prompt}</h1>
 
     <GridBox cards={a} />
@@ -21,7 +23,6 @@
             <input class="answer-btn" type="button" value={option} on:click|preventDefault={validateAnswer}>
         {/each}
     </footer>
-    
 </div>
 
 <style>
@@ -72,9 +73,41 @@
         justify-content: center;
     }
 
-    img {
+    aside {
+        position: fixed;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* height: fit-content;
+        width: fit-content; */
+        right: 1rem;
+        bottom: 1rem;
+        border: solid darkslategray 2px;
+        background-color: pink;
+    }
+
+    /* note: to adjust size of encouragement pop up just change aside img height */
+    aside h6 {
+        text-align: center;
+        margin: 0;
+        background-color: darkslategray;
+        color: lightgoldenrodyellow;
+        width: 100%;
+    }
+
+    aside img {
+        /* just adjust height to change the pop up dimensions */
+        height: 10rem;
+        margin:0;
+    }
+
+    section img {
         height: 40px;
         width: 40px;
+    }
+
+    #pop-up {
+        display: none;
     }
 
     footer {
@@ -113,6 +146,7 @@
     $: console.log(`${a} + ${b} = ${answer}`);
 
     // function to shuffle an array
+    // TODO - refactor into utils
     // https://javascript.info/task/shuffle
     function shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -139,6 +173,10 @@
             // change replay btn display to block to reveal it to user
             const replayBtn = document.getElementById('replay-btn');
             replayBtn.style.display = 'block';
+
+            // change pop-up display to flex to reveal and maintain img proportions
+            const popUp = document.getElementById('pop-up');
+            popUp.style.display = 'flex';
 
             // disable answer buttons
             const answerBtnsCollection = document.getElementsByClassName('answer-btn');
@@ -186,6 +224,10 @@
         // change replay btn display to none
         const replayBtn = document.getElementById('replay-btn');
         replayBtn.style.display = 'none';
+
+        // change pop-up display to none to hide from user again
+        const popUp = document.getElementById('pop-up');
+        popUp.style.display = 'none';
 
         // re-enable answer buttons
         const answerBtnsCollection = document.getElementsByClassName('answer-btn');
